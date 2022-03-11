@@ -1,6 +1,6 @@
 """Functions to parse a file containing student data."""
 
-
+from ast import literal_eval
 
 
 def all_houses(filename):
@@ -196,8 +196,13 @@ def all_data(filename):
 
     # TODO: replace this with your code
 
+    school_data = open(filename, "r")
+    for line in school_data:
+      string = f"{line.split('|')[0]} {line.split('|')[1]}, {line.split('|')[2]}, {line.split('|')[3]}, {line.split('|')[4].strip()}"
+      all_data.append(tuple(map(str, string.split(', '))))
     return all_data
 
+all_data('cohort_data.txt')
 
 def get_cohort_for(filename, name):
     """Given someone's name, return the cohort they belong to.
