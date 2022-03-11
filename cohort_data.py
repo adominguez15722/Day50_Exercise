@@ -262,6 +262,20 @@ def find_duped_last_names(filename):
 
     # TODO: replace this with your code
 
+    last_names = []
+    dup_last_names = set()
+    school_data = open(filename, "r")
+    for line in school_data:
+      name2 = (line.split('|')[1])
+      if name2 not in last_names:
+        last_names.append(name2)
+      else:
+        dup_last_names.add(name2)
+     
+    print(dup_last_names)
+
+find_duped_last_names('cohort_data.txt')
+
 
 def get_housemates_for(filename, name):
     """Return a set of housemates for the given student.
@@ -282,14 +296,14 @@ def get_housemates_for(filename, name):
 # END OF MAIN EXERCISE.  Yay!  You did it! You Rock!
 #
 
-if __name__ == '__main__':
-    import doctest
+# if __name__ == '__main__':
+#     import doctest
 
-    result = doctest.testfile('doctests.py',
-                              report=False,
-                              optionflags=(
-                                  doctest.REPORT_ONLY_FIRST_FAILURE
-                              ))
-    doctest.master.summarize(1)
-    if result.failed == 0:
-        print('ALL TESTS PASSED')
+#     result = doctest.testfile('doctests.py',
+#                               report=False,
+#                               optionflags=(
+#                                   doctest.REPORT_ONLY_FIRST_FAILURE
+#                               ))
+#     doctest.master.summarize(1)
+#     if result.failed == 0:
+#         print('ALL TESTS PASSED')
