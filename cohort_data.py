@@ -69,6 +69,10 @@ def students_by_cohort(filename, cohort='All'):
     for line in school_data:
       if cohort in line:
         students.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      elif 'I' in line.split('|')[-1]:
+        pass
+      elif 'G' in line.split('|')[-1]:
+        pass
       elif cohort == 'All':
         students.append(f"{line.split('|')[0]} {line.split('|')[1]}")
       else:
@@ -89,9 +93,9 @@ def students_by_cohort(filename, cohort='All'):
     # print(students)
     school_data.close()
 
-    print(sorted(students))
+    return sorted(students)
 
-students_by_cohort('cohort_data.txt', cohort='Fall 2015')
+students_by_cohort('cohort_data.txt')
 
 def all_names_by_house(filename):
     """Return a list that contains rosters for all houses, ghosts, instructors.
@@ -123,7 +127,7 @@ def all_names_by_house(filename):
     Return:
       - list[list]: a list of lists
     """
-
+    rosters = []
     dumbledores_army = []
     gryffindor = []
     hufflepuff = []
@@ -134,8 +138,40 @@ def all_names_by_house(filename):
 
     # TODO: replace this with your code
 
-    return []
+    school_data = open(filename, "r")
+    for line in school_data:
+      if "Dumbledore's Army" in line:
+        dumbledores_army.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      elif 'Gryffindor' in line:
+        gryffindor.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      elif 'Hufflepuff' in line:
+        hufflepuff.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      elif 'Ravenclaw' in line:
+        ravenclaw.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      elif 'Slytherin' in line:
+        slytherin.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      elif 'G' in line.split('|')[-1]:
+        ghosts.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      elif 'I' in line.split('|')[-1]:
+        instructors.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      else:
+        pass
 
+      
+    rosters.append(sorted(dumbledores_army))
+    rosters.append(sorted(gryffindor))
+    rosters.append(sorted(hufflepuff))
+    rosters.append(sorted(ravenclaw))
+    rosters.append(sorted(slytherin))
+    rosters.append(sorted(ghosts))
+    rosters.append(sorted(instructors))
+
+    school_data.close()
+    return rosters 
+    # roster
+    # return []
+
+all_names_by_house('cohort_data.txt')
 
 def all_data(filename):
     """Return all the data in a file.
