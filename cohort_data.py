@@ -25,7 +25,7 @@ def all_houses(filename):
     for x in school_data:
       houses.add(x.split('|')[2])
     houses.discard('')
-    
+    school_data.close()
 
     
 
@@ -65,8 +65,33 @@ def students_by_cohort(filename, cohort='All'):
 
     # TODO: replace this with your code
 
-    return sorted(students)
+    school_data = open(filename, "r")
+    for line in school_data:
+      if cohort in line:
+        students.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      elif cohort == 'All':
+        students.append(f"{line.split('|')[0]} {line.split('|')[1]}")
+      else:
+          # students = []
+        pass
 
+      # students_split = x.strip('\n').split('|')
+      # students.append(students_split[:2] + [students_split[-1]])
+      # students.append(students_split[-1])
+
+    # def which_cohort(name):
+    #   if name in students:
+    #     print()
+
+    # if cohort == '':
+    #   return []
+    # elif cohort == 
+    # print(students)
+    school_data.close()
+
+    print(sorted(students))
+
+students_by_cohort('cohort_data.txt', cohort='Fall 2015')
 
 def all_names_by_house(filename):
     """Return a list that contains rosters for all houses, ghosts, instructors.
@@ -198,14 +223,14 @@ def get_housemates_for(filename, name):
 # END OF MAIN EXERCISE.  Yay!  You did it! You Rock!
 #
 
-# if __name__ == '__main__':
-#     import doctest
+if __name__ == '__main__':
+    import doctest
 
-#     result = doctest.testfile('doctests.py',
-#                               report=False,
-#                               optionflags=(
-#                                   doctest.REPORT_ONLY_FIRST_FAILURE
-#                               ))
-#     doctest.master.summarize(1)
-#     if result.failed == 0:
-#         print('ALL TESTS PASSED')
+    result = doctest.testfile('doctests.py',
+                              report=False,
+                              optionflags=(
+                                  doctest.REPORT_ONLY_FIRST_FAILURE
+                              ))
+    doctest.master.summarize(1)
+    if result.failed == 0:
+        print('ALL TESTS PASSED')
