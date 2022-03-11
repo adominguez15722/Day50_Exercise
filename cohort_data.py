@@ -227,6 +227,24 @@ def get_cohort_for(filename, name):
 
     # TODO: replace this with your code
 
+    school_data = open(filename, "r")
+    for line in school_data:
+      name1 = (name.split(' ')[0])
+      name2 = (name.split(' ')[1])
+
+      if name1 in line.split('|')[0] and name2 in line.split('|')[1]:
+        cohort = (f"{line.split('|')[-1].strip()}")
+        break
+      else:
+        cohort = None
+      # else:
+      #     # students = []
+      #   pass
+    school_data.close()
+    return cohort
+
+get_cohort_for('cohort_data.txt', 'Harry Potter')
+
 
 def find_duped_last_names(filename):
     """Return a set of duplicated last names that exist in the data.
