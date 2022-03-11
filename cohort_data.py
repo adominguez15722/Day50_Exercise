@@ -230,8 +230,10 @@ def get_cohort_for(filename, name):
     school_data = open(filename, "r")
     for line in school_data:
       name1 = (name.split(' ')[0])
-      name2 = (name.split(' ')[1])
-
+      try:
+        name2 = (name.split(' ')[1])
+      except:
+        pass
       if name1 in line.split('|')[0] and name2 in line.split('|')[1]:
         cohort = (f"{line.split('|')[-1].strip()}")
         break
@@ -264,6 +266,7 @@ def find_duped_last_names(filename):
 
     last_names = []
     dup_last_names = set()
+
     school_data = open(filename, "r")
     for line in school_data:
       name2 = (line.split('|')[1])
@@ -271,8 +274,10 @@ def find_duped_last_names(filename):
         last_names.append(name2)
       else:
         dup_last_names.add(name2)
-     
-    print(dup_last_names)
+    
+    
+    school_data.close()
+    return dup_last_names
 
 find_duped_last_names('cohort_data.txt')
 
@@ -289,21 +294,48 @@ def get_housemates_for(filename, name):
     {'Angelina Johnson', ..., 'Seamus Finnigan'}
     """
 
+
+
     # TODO: replace this with your code
+    
+    students = []
+    housemates = set()
+
+    school_data = open(filename, "r")
+    for line in school_data:
+      string = f"{line.split('|')[0]} {line.split('|')[1]}, {line.split('|')[2]}, {line.split('|')[-1].strip()}"
+
+      students.append(tuple(map(str, string.split(', '))))
+    
+    for tup in students:
+      if name == tup[0]:
+        houses = tup[1]
+        cohorts = tup[2]
+
+    for tup in students:
+      if houses in tup[1] and cohorts in tup[2]:
+        housemates.add(tup[0])
+        housemates.discard(name)
+    
+
+    # for tup in 
+    school_data.close()
+    return housemates
 
 
+get_housemates_for('cohort_data.txt', 'Harry Potter')
 ##############################################################################
 # END OF MAIN EXERCISE.  Yay!  You did it! You Rock!
 #
 
-# if __name__ == '__main__':
-#     import doctest
+if __name__ == '__main__':
+    import doctest
 
-#     result = doctest.testfile('doctests.py',
-#                               report=False,
-#                               optionflags=(
-#                                   doctest.REPORT_ONLY_FIRST_FAILURE
-#                               ))
-#     doctest.master.summarize(1)
-#     if result.failed == 0:
-#         print('ALL TESTS PASSED')
+    result = doctest.testfile('doctests.py',
+                              report=False,
+                              optionflags=(
+                                  doctest.REPORT_ONLY_FIRST_FAILURE
+                              ))
+    doctest.master.summarize(1)
+    if result.failed == 0:
+        print('ALL TESTS PASSED')
